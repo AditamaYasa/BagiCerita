@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="id"> 
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BagiCerita</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" />
+  <link rel="shortcut icon" href="favicon.png">
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js" defer></script>
+</head>
+<body>
+  <header class="header">
+    <a href="#main-content" class="skip-link" id="skip-to-content">Skip to content</a>
+    <nav class="navbar" id="main-navigation" aria-label="Navigasi utama">
+      <div class="logo">BagiCerita</div>
+      <ul class="nav-links">
+        <li><a href="#/">Home</a></li>
+        <li><a href="#/add-story">Add Story</a></li>
+        <li><a href="#/about">About</a></li>
+        <li id="login-item"><a href="#/login" id="login-link">Login</a></li>
+        <li id="logout-item" hidden><a href="#" id="logout-link">Logout</a></li>
+      </ul>
+      <button id="drawer-button" class="drawer-button" aria-label="Buka menu navigasi" aria-controls="main-navigation" aria-expanded="false">☰</button>
+    </nav>
+  </header>
+  <main class="container" id="main-content"></main>
+  <footer class="footer">
+    <p>&copy; 2025 BagiCerita. All rights reserved.</p>
+  </footer>
+</body>
+</html>
