@@ -1,6 +1,7 @@
 import '../styles/styles.css';
 import App from './pages/app';
 import APP_CONFIG from './config';
+import { registerServiceWorker } from './utils/index';
 
 function handleSkipToContent(event) {
   event.preventDefault();
@@ -57,7 +58,8 @@ document.addEventListener('DOMContentLoaded', async () => {
   const redirected = redirectToLoginIfUnauthorized();
   if (redirected) return;
 
-  await app.renderPage();
+  await registerServiceWorker();
+  await app.renderPage(); 
 
   window.addEventListener('hashchange', async () => {
     if (!document.startViewTransition) {

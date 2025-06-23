@@ -1,9 +1,13 @@
 import { StoryService } from "../../data/api";
+import StoryDB from "../../data/database";
+import { activatePushNotification, deactivatePushNotification, enablePushNotification, unenablePushNotification } from "../../utils/notifications";
 
 export default class HomePagePresenter {
   constructor(view) {
     this.view = view;
     this.SIZE = 8;
+    this.stories = [];
+    this.isSubscribed = false;
   }
 
   async init() {
@@ -12,7 +16,9 @@ export default class HomePagePresenter {
 
     try {
       const data = await this._fetchStories();
+      this.stories = data;
       this.view.render(data);
+      await this.updateSubscribeButton();
     } catch (error) {
       this.view.showError(error.message || "Gagal memuat cerita.");
     } finally {
@@ -64,5 +70,47 @@ export default class HomePagePresenter {
     });
 
     return listStory;
+  }
+  getStoryById(id) {
+    return this.stories.find((story) => story.id === id);
+  }
+  
+  async saveStoryToFavorite(story) {
+    try {
+      await StoryDB.putStory(story);
+    } catch (error) {
+      console.error("Gagal menyimpan ke Favorite", error);
+    }
+  }
+  async handlePushToggle() {
+    try {
+      const registration = await navigator.serviceWorker.ready;
+      const subscription = await registration.pushManager.getSubscription();
+
+      if (subscription) {
+        await deactivatePushNotification();
+      } else {
+        await activatePushNotification();
+      }
+
+      this.updateSubscribeButton();
+    } catch (error) {
+      console.error("Gagal mengubah status langganan:", error);
+    }
+  }
+
+  async updateSubscribeButton() {
+    try {
+      if (!('serviceWorker' in navigator)) {
+        console.warn("Service worker tidak didukung");
+        return;
+      }
+      
+      const registration = await navigator.serviceWorker.ready;
+      const subscription = await registration.pushManager.getSubscription();
+      this.view.updateSubscribeButtonText(!!subscription);
+    } catch (error) {
+      console.error("Gagal mengecek status langganan:", error);
+    }
   }
 }

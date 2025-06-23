@@ -1,0 +1,101 @@
+{ 
+  "start_url": "/#/",
+  "scope": "/",
+  "name": "BagiCerita",
+  "short_name": "Cerita",
+  "description": "Aplikasi untuk berbagi cerita dan pengalaman, Created by Tamayash",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#4E6688",
+  "icons": [
+    {
+      "src": "/icons/BagiCerita-1024.png",
+      "sizes": "1024x1024",
+      "type": "image/png"
+    },
+    {
+      "src": "/icons/BagiCerita-1024.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+],
+"screenshots": [
+    {
+      "src": "screenshots/screenshot1.png",
+      "sizes": "1884x894",
+      "type": "image/png",
+      "form_factor": "wide"
+    },
+    {
+      "src": "screenshots/screenshot2.png",
+      "sizes": "1895x895",
+      "type": "image/png",
+      "form_factor": "wide"
+    },
+    {
+      "src": "screenshots/screenshot3.png",
+      "sizes": "1892x897",
+      "type": "image/png",
+      "form_factor": "wide"
+    },
+    {
+      "src": "screenshots/screenshot4.png",
+      "sizes": "1888x893",
+      "type": "image/png",
+      "form_factor": "wide"
+    },
+    {
+      "src": "screenshots/screenshot5.png",
+      "sizes": "631x756",
+      "type": "image/png",
+      "form_factor": "narrow"
+    },
+    {
+      "src": "screenshots/screenshot6.png",
+      "sizes": "629x764",
+      "type": "image/png",
+      "form_factor": "narrow"
+    },
+    {
+      "src": "screenshots/screenshot7.png",
+      "sizes": "632x765",
+      "type": "image/png",
+      "form_factor": "narrow"
+    },
+    {
+      "src": "screenshots/screenshot8.png",
+      "sizes": "632x764",
+      "type": "image/png",
+      "form_factor": "narrow"
+    }
+  ],
+  
+  "shortcuts": [
+    {
+      "name": "Home",
+      "short_name": "Home",
+      "description": "Home Page of BagiCerita",
+      "url": "/#/",
+      "icons": [
+        {
+          "src": "/icons/BagiCerita-512.png",
+          "type": "image/png",
+          "sizes": "512x512"
+        }
+      ]
+    },
+    {
+      "name": "Add Story",
+      "short_name": "Add",
+      "description": "Add a new story to BagiCerita",
+      "url": "/#/add-story",
+      "icons": [
+        {
+          "src": "/icons/BagiCerita-512.png",
+          "type": "image/png",
+          "sizes": "512x512"
+        }
+      ]
+    }
+]
+}

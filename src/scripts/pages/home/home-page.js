@@ -13,7 +13,10 @@ export class HomePage {
   async render(stories = []) {
     this.container.innerHTML = `
       <section class="content" aria-label="Daftar cerita populer">
+        <div class="section-header">
         <h1>Cerita Populer</h1>
+        <button id="subscribe-button" class="subscribe-button">Subscribe 🔔</button>
+        </div>
         <div class="story-grid" id="story-container">
           ${stories.map((story) => this._createStoryCard(story)).join("")}
         </div>
@@ -32,6 +35,27 @@ export class HomePage {
   async afterRender() {
     this._presenter = new HomePagePresenter(this);
     await this._presenter.init();
+    
+    await this._presenter.updateSubscribeButton();
+    
+    const subscribeBtn = document.getElementById("subscribe-button");
+    if (subscribeBtn) {
+    subscribeBtn.addEventListener("click", () =>
+      this._presenter.handlePushToggle()
+    );
+  }
+
+    document.querySelectorAll(".favorite-btn").forEach((button) => {
+      button.addEventListener("click", async (e) => {
+        const id = e.target.dataset.id;
+        const story = this._presenter.getStoryById(id); 
+        
+        if (story) {
+          await this._presenter.saveStoryToFavorite(story);
+          alert("Story telah disimpan ke Favorite!");
+        }
+      });
+    });
   }
 
   prependStory(story) {
@@ -80,7 +104,8 @@ export class HomePage {
           <p class="author">By ${story.name}</p>
           <p class="excerpt">Dibuat : ${new Date(story.createdAt).toLocaleString()}</p>
           ${story.lat && story.lon ? `<p class="coordinates">Lokasi : ${story.lat.toFixed(4)}, ${story.lon.toFixed(4)}</p>` : ""}
-        </div>
+          <button class="favorite-btn" data-id="${story.id}">Favorite ⭐</button>
+      </div>
       </article>
     `;
   }
@@ -100,6 +125,11 @@ export class HomePage {
     }
 
     addMarkers(this._map, [story]);
+  }
+  
+  updateSubscribeButtonText(isSubscribed) {
+    const button = document.getElementById("subscribe-button");
+    button.textContent = isSubscribed ? "Unsubscribe 🔕" : "Subscribe 🔔";
   }
 }
 

@@ -24,5 +24,6 @@ module.exports = merge(common, {
         warnings: true,
       },
     },
+    open: true,
   },
 });

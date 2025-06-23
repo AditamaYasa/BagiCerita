@@ -28,21 +28,23 @@ export default class AddStoryPresenter {
 
   setPhotoBlob(blob) {
     this.photoBlob = blob;
+    this.view.updatePhotoPreview(blob);
   }
   
   validateForm({ description, latitude, longitude }) {
-    if (!description || !latitude || !longitude) return false;
-    if (!this.photoBlob) return false;
-    return true;
+  if (!this.photoBlob) return 'Foto belum diambil.';
+  if (!description) return 'Deskripsi belum diisi.';
+  if (!latitude || !longitude) return 'Lokasi belum dipilih.';
+  return true;
   }
 
   async handleFormSubmit({ description, latitude, longitude }) {
     try {
-      if (!this.validateForm({ description, latitude, longitude })) {
-        this.view.updateMessage('Mohon lengkapi semua data dan ambil foto terlebih dahulu!');
+      const validationResult = this.validateForm({ description, latitude, longitude });
+      if (validationResult !== true) {
+        this.view.updateMessage(validationResult);
         return;
       }
-
       this.view.updateMessage('Mengirim data...');
 
       await StoryService.create({

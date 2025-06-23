@@ -1,4 +1,4 @@
-import routes from '../routes/routes';
+import routes, { NotFoundPage } from '../routes/routes';
 import { getActiveRoute } from '../routes/url-parser';
 import APP_CONFIG from '../config';
 
@@ -68,8 +68,9 @@ class App {
     }
 
     if (!PageClass) {
-      console.error('No page class found for route:', url);
-      this.#content.innerHTML = '<p>Halaman tidak ditemukan.</p>';
+      const page = new NotFoundPage(); 
+      this.#content.innerHTML = await page.render();
+      await page.afterRender?.();
       return;
     }
 

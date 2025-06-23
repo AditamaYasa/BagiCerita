@@ -15,11 +15,22 @@
   box-sizing: border-box;
 }
 
+main.container {
+  flex: 1;
+  padding: 2rem;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   line-height: 1.6;
   color: var(--text-color);
   background-color: var(--secondary-color);
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
 /* ACCESSIBILITY */
@@ -53,7 +64,6 @@ body {
   top: 0;
   z-index: 10;
 }
-
 
 .navbar {
   display: flex;
@@ -142,6 +152,7 @@ body {
   box-shadow: var(--shadow);
   transition: transform 0.3s, box-shadow 0.3s;
   animation: fadeInUp 0.5s ease;
+  height: 100%;
 }
 
 .story-card:hover,
@@ -159,6 +170,8 @@ body {
 
 .story-info {
   padding: 15px;
+  min-height: 130px;
+  overflow: hidden;
 }
 
 .story-info .author {
@@ -186,7 +199,6 @@ body {
   overflow: hidden;
 }
 
-
 .story-stats {
   display: flex;
   justify-content: space-between;
@@ -207,6 +219,12 @@ figcaption {
   font-size: 1rem;
   color: var(--primary-color);
   padding: 10px 15px 0;
+}
+
+.favorite-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
 }
 
 /* FORMS */
@@ -243,6 +261,14 @@ figcaption {
   padding: 10px;
   border-radius: 5px;
   font-weight: bold;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between; 
+  align-items: center;
+  flex-wrap: wrap; 
+  margin-bottom: 1rem;
 }
 
 /* BUTTONS */
@@ -285,12 +311,15 @@ figcaption {
 }
 
 .delete-btn {
+  align-self: flex-end;
   background-color: #dc3545;
   color: white;
-  padding: 12px;
-  border-radius: 50%;
-  font-size: 1.2rem;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -301,6 +330,78 @@ figcaption {
 .delete-btn:focus {
   background-color: #c82333;
   transform: scale(1.1);
+}
+
+.fileInput {
+  display: block;
+  width: 100%;
+  padding: 10px 12px;
+  font-size: 1rem;
+  color: var(--text-color);
+  background-color: var(--white);
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 0px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.fileInput:hover {
+  border-color: var(--primary-color);
+}
+
+.fileInput:focus {
+  outline: none;
+  border-color: var(--primary-dark);
+  box-shadow: 0 0 0 2px rgba(78, 102, 136, 0.2);
+}
+
+.form-group label[for="fileInput"] {
+  color: var(--primary-dark);
+  font-size: 1rem;
+  padding: 6px 10px;
+  border-radius: 6px;
+  display: inline-block;
+  font-weight: bold;
+  margin-top: 2%;
+  margin-bottom: 5px;
+}
+
+.favorite-btn {
+  align-self: flex-end; 
+  background-color: var(--primary-dark);
+  color: var(--white);
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s ease;
+}
+
+.favorite-btn:hover {
+  background-color: var(--primary-color);
+}
+
+.subscribe-button {
+  background-color: var(--white);
+  color: var(--primary-dark);
+  border: 2px solid var(--primary-dark);
+  padding: 0.5rem 1.2rem;
+  font-size: 1.1rem;
+  font-weight: 500;
+  border-radius: 99px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.3s ease;
+}
+
+.subscribe-button:hover {
+  background-color: var(--primary-dark);
+  color: var(--white);
 }
 
 #logout-link {
@@ -535,6 +636,45 @@ figcaption {
   position: relative;
 }
 
+.not-found-page {
+  text-align: center;
+  padding: 80px 20px;
+}
+
+.not-found-title {
+  font-size: 4rem;
+  color: #4E6688;
+  margin-bottom: 0.5rem;
+}
+
+.not-found-message {
+  font-size: 1.5rem;
+  margin-top: 10px;
+  color: #333;
+}
+
+.not-found-description {
+  color: #666;
+  margin-bottom: 30px;
+}
+
+.back-home-btn {
+  display: inline-block;
+  background-color: #4E6688;
+  color: white;
+  padding: 12px 24px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.back-home-btn:hover {
+  background-color: #3a506b;
+}
+
+
+
 
 /* MEDIA QUERIES */
 @media (max-width: 768px) {
@@ -621,6 +761,14 @@ figcaption {
   .skip-link {
     font-size: 0.9rem;
     padding: 6px 12px;
+  }
+  .section-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .subscribe-button {
+    align-items: center;
+    margin-top: 0.5rem;
   }
 }
 

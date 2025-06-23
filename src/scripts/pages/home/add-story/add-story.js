@@ -21,6 +21,8 @@ export default class AddStory {
             <label for="cameraInput">Ambil Gambar</label>
             <video id="cameraPreview" class="camera-preview" autoplay playsinline></video>
             <button type="button" id="takePhoto" class="btn">Ambil Foto</button>
+            <label for="fileInput">Pilih dari galeri</label>
+            <input type="file" id="fileInput" class="fileInput" accept="image/*" />
             <div id="cameraError" class="error-message"></div>
             <canvas id="photoCanvas" class="hidden"></canvas>
             <img id="photoPreview" alt="Foto yang diambil" class="photo-preview" />
@@ -73,6 +75,7 @@ export default class AddStory {
       form: document.getElementById('storyForm'),
       video: document.getElementById('cameraPreview'),
       canvas: document.getElementById('photoCanvas'),
+      fileInput: document.getElementById('fileInput'),
       takePhotoButton: document.getElementById('takePhoto'),
       photoPreview: document.getElementById('photoPreview'),
       latitude: document.getElementById('latitude'),
@@ -118,6 +121,18 @@ export default class AddStory {
         this.presenter.setPhotoBlob(blob);
         this.updatePhotoPreview(blob);
       }, 'image/jpeg', 0.95);
+    });
+    
+    const { fileInput } = this.getElements();
+    
+    fileInput.addEventListener('change', () => {
+      const file = fileInput.files[0];
+      if (file && file.type.startsWith('image/')) {
+        this.presenter.setPhotoBlob(file);
+        this.updatePhotoPreview(file);
+      } else {
+        this.updateCameraError('File yang dipilih bukan gambar.');
+      }
     });
   }
 
@@ -191,6 +206,13 @@ export default class AddStory {
     this.photoBlob = blob;
     const { photoPreview } = this.getElements();
     photoPreview.src = URL.createObjectURL(blob);
+    
+    if (!blob) {
+      photoPreview.style.display = 'none';
+      return;
+    }
+    photoPreview.src = URL.createObjectURL(blob);
+    photoPreview.style.display = 'block';
   }
 
   updateMessage(message) {
@@ -206,6 +228,7 @@ export default class AddStory {
   navigateTo(hash) {
     window.location.hash = hash;
   }
+  
 
   stopCamera() {
     if (this.cameraStream) {
